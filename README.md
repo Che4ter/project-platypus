@@ -10,34 +10,32 @@ General API URL: `platypus.stair.ch/api/`
 | `POST` | Used for creating resources. |
 | `DELETE` | Used for deleting resources. |
 
-## Users
+## User
 
 ### GET
 
-- all users: `/users`
-- user by id: `/users/id/<id>`
+- all user: `/user`
+- user by id: `/user/<id>`
 
 ### POST
 
-- new user: `/users/<id>/<password>/<role>`
+- new user: `/user
 
-## Comments
+## Feedback
 
 ### GET
 
-- all comments: `/comments`
-- comment by ID: `/comments/id/<id>`
-- comments by user: `/comments/user/<user_id>`
-- comments by hashtag: `/comments/hashtag/<hashtag>`
+- all feedback: `/feedback`
+- feedback by ID: `/feedback/<id>`
+- feedback by user ID: `/feedback/?user_id=<id>`
+- feedback by hashtag: `/feedback/?hashtag[]=<hashtag1>&hashtag[]=<hashtag2>`
 
 ### POST
 
-- new comment: `/comments/…` ?
+- new feedback: `/feedback` 
 
-## Hashtags
+## Hashtag
 
 ### GET
 
-- all hashtags: `/hashtags`
-- hashtags by type: `/hashtags/type/<type_id>`
-
+- all hashtag: `/hashtag`
