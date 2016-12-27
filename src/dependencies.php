@@ -28,3 +28,7 @@ $container['db'] = function ($container) {
 
     return $capsule;
 };
+
+$container['UserService'] = function ($c) {
+    return new Platypus\Model\UserService($c);
+};

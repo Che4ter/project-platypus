@@ -4,11 +4,9 @@ namespace Tests\Functional;
 
 class UserControllerTest extends BaseTestCase
 {
-    public function testUserRequest_returnsAllUsers()
+    public function test_UserRequest_returnsAllUsers()
     {
         $response = $this->runApp('GET', '/user');
-        $this->assertEquals(201, $response->getStatusCode());
-
-        $this->assertContains('Rob', (string)$response->getBody());
+        $this->assertEquals(200, $response->getStatusCode());
     }
 }
