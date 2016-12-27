@@ -15,5 +15,19 @@ return [
             'path' => __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
+
+        // Eloquent/Database Settings
+        'determineRouteBeforeAppMiddleware' => false,
+        'displayErrorDetails' => true,
+        'db' => [
+            'driver' => 'mysql',
+            'host' => 'localhost',
+            'database' => 'platypus',
+            'username' => 'platypus',
+            'password' => 'platypus',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+        ]
     ],
 ];
