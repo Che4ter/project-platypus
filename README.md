@@ -40,9 +40,15 @@ General API URL: `platypus.stair.ch/api/`
 
 - all hashtag: `/hashtag`
 
+### Development
+
+## Database
+***(only for testing)***
+- import db.sql with 'mysql -u root -p -h localhost < db.sql'
+- Username/Password: platypus
 
 
-###### How to install php / run the php server
+## How to install php / run the php server
 install php-cli (php5-cli)
 move composer.phar to project root
 run "php composer.phar install" to copy all dependencies into ./vendor/
