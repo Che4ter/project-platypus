@@ -5,17 +5,16 @@ use Interop\Container\ContainerInterface;
 
 class UserController
 {
-    protected $ci;
+    private $userService;
 
-    //Constructor
     public function __construct(ContainerInterface $ci)
     {
-        $this->ci = $ci;
+        $this->userService = $ci->get('UserService');
     }
 
     public function getUsers($request, $response, $args)
     {
-        $data = array('name' => 'Rob', 'age' => 40);
-        return $response->withJson($data, 201);
+        $data = $this->userService->getUsers();
+        return $response->withJson($data, 200);
     }
 }
