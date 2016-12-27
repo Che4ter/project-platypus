@@ -11,7 +11,4 @@ $app->get('/', function ($request, $response, $args) {
 
 
 //USER
-$app->get('/user', function ($request, $response, $args) {
-    $data = array('name' => 'Rob', 'age' => 40);
-    return $response->withJson($data, 201);
-});
+$app->get('/user', '\Platypus\Controller\UserController:getUsers');
