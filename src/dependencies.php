@@ -22,12 +22,15 @@ $container['logger'] = function ($c) {
 $container['db'] = function ($container) {
     $capsule = new \Illuminate\Database\Capsule\Manager;
     $capsule->addConnection($container['settings']['db']);
+    $capsule->getDatabaseManager()->setDefaultConnection('default');
 
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
 
     return $capsule;
 };
+
+\Illuminate\Database\Eloquent\Model::setConnectionResolver($container->get('db')->getDatabaseManager());
 
 $container['UserService'] = function ($c) {
     return new Platypus\Model\UserService($c);
