@@ -39,3 +39,10 @@ General API URL: `platypus.stair.ch/api/`
 ### GET
 
 - all hashtag: `/hashtag`
+
+### Development
+
+## Database
+***(only for testing)***
+- import db.sql with 'mysql -u root -p -h localhost < db.sql'
+- Username/Password: platypus
