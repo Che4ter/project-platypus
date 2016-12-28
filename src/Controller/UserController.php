@@ -2,6 +2,7 @@
 
 namespace Platypus\Controller;
 use Interop\Container\ContainerInterface;
+use Platypus\Model\User;
 
 class UserController
 {
@@ -17,4 +18,14 @@ class UserController
         $data = $this->userService->getUsers();
         return $response->withJson($data, 200);
     }
+
+    public function createUser($request, $response, $args)
+    {
+        $request_params = $request->getParsedBody();
+
+        $response_code = $this->userService->createUser($request_params);
+
+        return $response->withStatus($response_code);
+    }
+
 }

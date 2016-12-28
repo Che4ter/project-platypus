@@ -12,3 +12,5 @@ $app->get('/', function ($request, $response, $args) {
 
 //USER
 $app->get('/user', '\Platypus\Controller\UserController:getUsers');
+
+$app->post('/user', '\Platypus\Controller\UserController:createUser');
