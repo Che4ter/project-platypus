@@ -1,4 +1,5 @@
 CREATE USER IF NOT EXISTS 'platypus'@'localhost' IDENTIFIED BY 'platypus';
+CREATE USER IF NOT EXISTS 'platypus'@'172.17.0.1' IDENTIFIED BY 'platypus';
 
 DROP DATABASE IF EXISTS platypus;
 
@@ -7,6 +8,7 @@ CREATE DATABASE IF NOT EXISTS platypus;
 USE platypus;
 
 GRANT ALL ON platypus.* TO 'platypus'@'localhost';
+GRANT ALL ON platypus.* TO 'platypus'@'172.17.0.1';
 
 CREATE TABLE roles(
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
