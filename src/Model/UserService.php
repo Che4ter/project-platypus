@@ -17,6 +17,11 @@ class UserService
         return User::all();
     }
 
+    public function getUser($id)
+    {
+        return User::find($id);
+    }
+
     public function createUser($request_params)
     {
         //todo: check if user is authenticated

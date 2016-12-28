@@ -19,6 +19,12 @@ class UserController
         return $response->withJson($data, 200);
     }
 
+    public function getUser($request, $response, $args)
+    {
+        $data = $this->userService->getUser($args['id']);
+        return $response->withJson($data, 200);
+    }
+
     public function createUser($request, $response, $args)
     {
         $request_params = $request->getParsedBody();
