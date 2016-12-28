@@ -17,6 +17,11 @@ session_start();
 $settings = require __DIR__ . '/../src/settings.php';
 $app = new \Slim\App($settings);
 
+// JWT Middleware
+$app->add(new \Slim\Middleware\JwtAuthentication([
+    "secret" => "supersecretkeyyoushouldnotcommittogithub",
+    "path" => ["/protected", "/admin"]]));
+
 // Set up dependencies
 require __DIR__ . '/../src/dependencies.php';
 

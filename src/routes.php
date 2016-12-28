@@ -11,10 +11,13 @@ $app->get('/', function ($request, $response, $args) {
 
 
 //USER
-$app->get('/user', '\Platypus\Controller\UserController:getUsers');
-$app->get('/user/{id}', '\Platypus\Controller\UserController:getUser');
+$app->get('/api/v1/user', '\Platypus\Controller\UserController:getUsers');
+$app->get('/api/v1/user/{id}', '\Platypus\Controller\UserController:getUser');
 
-$app->post('/user', '\Platypus\Controller\UserController:createUser');
+$app->post('/api/v1/user', '\Platypus\Controller\UserController:createUser');
 
 //FEEDBACK
-$app->get('/feedback', '\Platypus\Controller\FeedbackController:getFeedback');
+$app->get('/api/v1/feedback', '\Platypus\Controller\FeedbackController:getFeedback');
+
+//Authentication
+$app->post('/api/v1/token', '\Platypus\Controller\AuthenticationController:getToken');
