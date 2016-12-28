@@ -35,3 +35,7 @@ $container['db'] = function ($container) {
 $container['UserService'] = function ($c) {
     return new Platypus\Model\UserService($c);
 };
+
+$container['FeedbackService'] = function ($c) {
+    return new Platypus\Model\FeedbackService($c);
+};

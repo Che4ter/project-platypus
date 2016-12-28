@@ -1,3 +1,0 @@
-insert into roles (rolename) values("newRole");
-
-insert into users (password, role_id, status) values("password", 1, 0);

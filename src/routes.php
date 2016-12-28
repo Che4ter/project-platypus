@@ -16,3 +16,5 @@ $app->get('/user/{id}', '\Platypus\Controller\UserController:getUser');
 
 $app->post('/user', '\Platypus\Controller\UserController:createUser');
 
+//FEEDBACK
+$app->get('/feedback', '\Platypus\Controller\FeedbackController:getFeedback');
