@@ -31,10 +31,18 @@ class UserController
     public function createUser($request, $response, $args)
     {
         $request_params = $request->getParsedBody();
+        if($this->userServer->userExists($mailaddress)) {
+            // fixme: maybe solve this using the illuminate validators
+            return $response->withJson(["error" => "User already exists."], 409);
+        }
 
-        $response_code = $this->userService->createUser($request_params);
+        $userCreated = $this->userService->createUser($request_params);
 
-        return $response->withStatus($response_code);
+        if(!$userCreated) {
+            return $response->withJson(["error" => "Failed to create user."], 422);
+        }
+
+        return $response->withJson(["success" => 1]);
     }
 
 }
