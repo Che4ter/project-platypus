@@ -12,6 +12,10 @@ class UserService
         $this->ci = $ci;
     }
 
+    public function userWithEmailExists($email) {
+        return User::find_by_mailaddress($email);
+    }
+
     public function getUsers()
     {
         return User::all();
@@ -31,19 +35,11 @@ class UserService
 
         $new_user = new User($request_params);
 
-        //todo: add password hashing!!!
         //todo: add error handling
-        //$new_user->password = password_hash($request_params["password"]);
-        $new_user->password = $request_params["password"];
+        //todo: remove salt from db
+        $new_user->password = password_hash($request_params["password"], PASSWORD_BCRYPT);
         $new_user->role_id = 1;
         $new_user->status = 0;
-        if($new_user->save())
-        {
-            return 201;
-        }
-        else
-        {
-            return 500;
-        }
+        return $new_user->save();
     }
 }

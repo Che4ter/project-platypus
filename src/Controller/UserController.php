@@ -15,23 +15,34 @@ class UserController
 
     public function getUsers($request, $response, $args)
     {
-        $data = $this->userService->getUsers();
-        return $response->withJson($data, 200);
+        $users = $this->userService->getUsers();
+        return $response->withJson($users, 200);
     }
 
     public function getUser($request, $response, $args)
     {
-        $data = $this->userService->getUser($args['id']);
-        return $response->withJson($data, 200);
+        $user = $this->userService->getUser($args['id']);
+        if($user === null) {
+            return $response->withJson(["error" => "User doesn't exist."], 404);
+        }
+        return $response->withJson($user, 200);
     }
 
     public function createUser($request, $response, $args)
     {
         $request_params = $request->getParsedBody();
+        if($this->userServer->userExists($mailaddress)) {
+            // fixme: maybe solve this using the illuminate validators
+            return $response->withJson(["error" => "User already exists."], 409);
+        }
 
-        $response_code = $this->userService->createUser($request_params);
+        $userCreated = $this->userService->createUser($request_params);
 
-        return $response->withStatus($response_code);
+        if(!$userCreated) {
+            return $response->withJson(["error" => "Failed to create user."], 422);
+        }
+
+        return $response->withJson(["success" => 1]);
     }
 
 }
