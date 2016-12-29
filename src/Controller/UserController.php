@@ -31,7 +31,7 @@ class UserController
     public function createUser($request, $response, $args)
     {
         $request_params = $request->getParsedBody();
-        if($this->userServer->userExists($mailaddress)) {
+        if($this->userService->userWithEmailExists($request_params["mailaddress"])) {
             // fixme: maybe solve this using the illuminate validators
             return $response->withJson(["error" => "User already exists."], 409);
         }

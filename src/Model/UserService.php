@@ -13,7 +13,10 @@ class UserService
     }
 
     public function userWithEmailExists($email) {
-        return User::find_by_mailaddress($email);
+        if(is_null(User::where('mailaddress','=', $email)->first()))
+            return false;
+        else
+            return true;
     }
 
     public function getUsers()
