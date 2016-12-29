@@ -1,6 +1,7 @@
 <?php
 
 namespace Platypus\Controller;
+
 use Interop\Container\ContainerInterface;
 use Platypus\Model\User;
 
@@ -24,15 +25,24 @@ class FeedbackController
         return $response->withJson($data, 200);
     }
 
+    public function createFeedback($request, $response, $args)
+    {
+        $request_params = $request->getParsedBody();
+
+        $createdFeedback = $this->feedbackService->createFeedback($request_params);
+
+        if($createdFeedback === null) {
+            return $response->withJson(["error" => "Failed to create feedback."], 422);
+        }
+
+        return $response->withJson(["success" => 1, "new_feedback" => $createdFeedback]);
+    }
+
     private function convertToCleanFeedback($feedback)
     {
-        return [
-            'id' => $feedback->id,
-            'feedback_text' => $feedback->feedback_text,
-            'parent_id' => $feedback->parent_id,
-            'hashtags' => $feedback->hashtags->map(function ($hashtag){
-                return $this->covertToCleanHashtag($hashtag);
-            })
+        return ['id' => $feedback->id, 'feedback_text' => $feedback->feedback_text, 'parent_id' => $feedback->parent_id, 'hashtags' => $feedback->hashtags->map(function ($hashtag) {
+            return $this->covertToCleanHashtag($hashtag);
+        })
 
         ];
 
@@ -40,10 +50,7 @@ class FeedbackController
 
     private function covertToCleanHashtag($hashtag)
     {
-        return [
-            'id' => $hashtag->id,
-            'hashtext' => $hashtag->hashtext
-
+        return ['id' => $hashtag->id, 'hashtext' => $hashtag->hashtext
 
         ];
     }
