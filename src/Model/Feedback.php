@@ -23,7 +23,7 @@ class Feedback extends \Illuminate\Database\Eloquent\Model
     /**
      * Get the user for the feedback.
      */
-    public function mood()
+    public function moods()
     {
         return $this->belongsTo('Platypus\Model\Mood');
     }
@@ -43,5 +43,13 @@ class Feedback extends \Illuminate\Database\Eloquent\Model
     public function hashtags()
     {
         return $this->belongsToMany('Platypus\Model\Hashtag');
+    }
+
+    /**
+     * Get the votes for the feedback.
+     */
+    public function votes()
+    {
+        return $this->hasMany('Platypus\Model\Vote');
     }
 }

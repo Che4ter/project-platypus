@@ -40,7 +40,7 @@ CREATE TABLE users(
 
 CREATE TABLE hashtypes(
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-	moodname VARCHAR(50),
+	hashtype_description VARCHAR(50),
 	created_at DATETIME,
 	updated_at DATETIME,
 	PRIMARY KEY(id)

@@ -27,7 +27,7 @@ INSERT INTO users (id,mailaddress,password,role_id,status,created_at,updated_at)
 	(4,"moderator@stud.hslu.platypus.ch","1234",9,1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
 	(5,"dozent@stud.hslu.platypus.ch","1234",9,1,UTC_TIMESTAMP(),UTC_TIMESTAMP());
 
-INSERT INTO hashtypes(id,moodname,created_at,updated_at) VALUES
+INSERT INTO hashtypes(id,hashtype_description,created_at,updated_at) VALUES
 	(1,"Semester",UTC_TIMESTAMP(),UTC_TIMESTAMP()),
 	(2,"Module",UTC_TIMESTAMP(),UTC_TIMESTAMP()),
 	(3,"Campus",UTC_TIMESTAMP(),UTC_TIMESTAMP()),
