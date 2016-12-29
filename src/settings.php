@@ -20,15 +20,15 @@ return [
         'determineRouteBeforeAppMiddleware' => false,
         'displayErrorDetails' => true,
         'db' => [
-            'driver' => 'mysql',
-            'host' => '127.0.0.1',
-            'port' => 3306,
-            'database' => 'platypus',
-            'username' => 'platypus',
-            'password' => 'platypus',
+            'driver' => env('DB_DRIVER', 'mysql'),
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => (int)env('DB_PORT', '3306'),
+            'database' => env('DB_NAME', 'platypus'),
+            'username' => env('DB_USER', 'platypus'),
+            'password' => env('DB_PASSWORD', 'platypus'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
-        ]
+        ],
     ],
 ];
