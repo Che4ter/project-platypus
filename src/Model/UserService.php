@@ -43,6 +43,7 @@ class UserService
         $new_user->password = password_hash($request_params["password"], PASSWORD_BCRYPT);
         $new_user->role_id = 1;
         $new_user->status = 0;
-        return $new_user->save();
+        $new_user->save();
+        return $new_user;
     }
 }
