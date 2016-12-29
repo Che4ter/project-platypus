@@ -61,7 +61,7 @@ fi
 if [ "$renew" -eq 1 ]; then
     echo "Recreating database users ... "
     dbgenerator_conn=
-    if [ "$usetest" -eq 0 ]; then
+    if [ "$usetest" -eq 1 ]; then
         dbgenerator_conn="--test"
     fi
     root_mysql_command=
