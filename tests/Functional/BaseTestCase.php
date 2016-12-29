@@ -94,10 +94,13 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         $this->app->getContainer()['db']->getDatabaseManager()->rollback();
     }
 
-    protected function createTestUser() {
+    protected function createTestUser($email = null, $password = null) {
+        if($email === null) $email = 'test@mail.com';
+        if($password === null) $password = 'password';
+
         return $this->runApp('POST', '/api/v1/user', [
-            'mailaddress' => 'test@mail.com',
-            'password' => 'testpw',
+            'mailaddress' => $email,
+            'password' => $password,
         ]);
     }
 }

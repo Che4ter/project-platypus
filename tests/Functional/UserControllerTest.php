@@ -37,6 +37,19 @@ class UserControllerTest extends BaseTestCase
         $this->assertEquals(409, $responseFail->getStatusCode());
     }
 
+    public function test_UserRequest_createUser_invalidMail() {
+        $responseFail = $this->createTestUser("nomail");
+
+        $this->assertEquals(422, $responseFail->getStatusCode());
+    }
+
+    public function test_UserRequest_createUser_shortPw() {
+        $responseFail = $this->createTestUser("valid@mail.com", "shortpw");
+
+        $this->assertEquals(422, $responseFail->getStatusCode());
+    }
+
+
     public function test_UserRequest_getUser() {
         $response = $this->createTestUser();
         $this->assertEquals(200, $response->getStatusCode());
