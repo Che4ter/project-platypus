@@ -26,6 +26,8 @@ class UserControllerTest extends BaseTestCase
     {
         $response = $this->runApp('GET', '/api/v1/user');
         $this->assertEquals(200, $response->getStatusCode());
+        $users = json_decode($response->getBody());
+        $this->assertTrue(is_array($users));
     }
 
     public function test_UserRequest_createUser() {
