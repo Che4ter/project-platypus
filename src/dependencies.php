@@ -33,9 +33,9 @@ $container['db'] = function ($container) {
 \Illuminate\Database\Eloquent\Model::setConnectionResolver($container->get('db')->getDatabaseManager());
 
 $container['UserService'] = function ($c) {
-    return new Platypus\Model\UserService($c);
+    return new Platypus\Service\UserService($c);
 };
 
 $container['FeedbackService'] = function ($c) {
-    return new Platypus\Model\FeedbackService($c);
+    return new Platypus\Service\FeedbackService($c);
 };

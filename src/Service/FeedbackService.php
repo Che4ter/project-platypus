@@ -1,7 +1,8 @@
 <?php
 
-namespace Platypus\Model;
+namespace Platypus\Service;
 use Interop\Container\ContainerInterface;
+use Platypus\Model\Feedback;
 
 class FeedbackService
 {
