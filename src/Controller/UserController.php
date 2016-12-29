@@ -15,14 +15,17 @@ class UserController
 
     public function getUsers($request, $response, $args)
     {
-        $data = $this->userService->getUsers();
-        return $response->withJson($data, 200);
+        $users = $this->userService->getUsers();
+        return $response->withJson($users, 200);
     }
 
     public function getUser($request, $response, $args)
     {
-        $data = $this->userService->getUser($args['id']);
-        return $response->withJson($data, 200);
+        $user = $this->userService->getUser($args['id']);
+        if($user === null) {
+            return $response->withJson(["error" => "User doesn't exist."], 404);
+        }
+        return $response->withJson($user, 200);
     }
 
     public function createUser($request, $response, $args)
