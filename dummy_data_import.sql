@@ -6,9 +6,9 @@ TRUNCATE TABLE roles;
 TRUNCATE TABLE users;
 TRUNCATE TABLE hashtypes;
 TRUNCATE TABLE moods;
-TRUNCATE TABLE hashtag;
+TRUNCATE TABLE hashtags;
 TRUNCATE TABLE feedback;
-TRUNCATE TABLE feedback_Hashtag;
+TRUNCATE TABLE feedback_hashtag;
 TRUNCATE TABLE votes;
 TRUNCATE TABLE reports;
 SET FOREIGN_KEY_CHECKS=1;
@@ -38,7 +38,7 @@ INSERT INTO moods(id,moodname,created_at,updated_at) VALUES
 	(2,"Positives",UTC_TIMESTAMP(),UTC_TIMESTAMP()),
 	(3,"Feedback",UTC_TIMESTAMP(),UTC_TIMESTAMP());
 
-INSERT INTO hashtag(id,hashtext,hashtype_id,created_at,updated_at) VALUES
+INSERT INTO hashtags(id,hashtext,hashtypes_id,created_at,updated_at) VALUES
 	(1,"HS16",1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
 	(2,"FS17",1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
 	(3,"PRG1",2,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
@@ -58,7 +58,7 @@ INSERT INTO feedback(id,feedback_text,parent_id,moods_id,feedback_status,user_id
 	(4, "Sehr Kompetente Dozenten",NULL,2,1,1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
 	(5, "Bitte Unterlagen schneller hochladen",NULL,3,1,1,UTC_TIMESTAMP(),UTC_TIMESTAMP());
 
-INSERT INTO feedback_Hashtag(id,hashtext_id,feedback_id,created_at,updated_at) VALUES
+INSERT INTO feedback_hashtag(id,hashtag_id,feedback_id,created_at,updated_at) VALUES
 	(1,1,1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
 	(2,3,1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
 	(3,1,2,UTC_TIMESTAMP(),UTC_TIMESTAMP()),

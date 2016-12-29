@@ -14,6 +14,6 @@ class FeedbackService
 
     public function getFeedback()
     {
-        return Feedback::all();
+        return Feedback::with("hashtags")->get();
     }
 }

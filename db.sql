@@ -54,15 +54,15 @@ CREATE table moods(
 	PRIMARY KEY(id)
 );
 
-CREATE TABLE hashtag(
+CREATE TABLE hashtags(
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	hashtext VARCHAR(50) NOT NULL,
-	hashtype_id INTEGER UNSIGNED NOT NULL,
+	hashtypes_id INTEGER UNSIGNED NOT NULL,
 	created_at DATETIME,
 	updated_at DATETIME,
 	PRIMARY KEY(id),
 	UNIQUE(hashtext),
-	FOREIGN KEY (hashtype_id) REFERENCES hashtypes(id)
+	FOREIGN KEY (hashtypes_id) REFERENCES hashtypes(id)
 );
 
 CREATE TABLE feedback(
@@ -81,14 +81,14 @@ CREATE TABLE feedback(
   	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-CREATE TABLE feedback_Hashtag(
+CREATE TABLE feedback_hashtag(
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
-	hashtext_id INTEGER UNSIGNED NOT NULL,
+	hashtag_id INTEGER UNSIGNED NOT NULL,
   	feedback_id INTEGER UNSIGNED NOT NULL,
 	created_at DATETIME,
 	updated_at DATETIME,
   	PRIMARY KEY(id),
-  	FOREIGN KEY (hashtext_id) REFERENCES hashtag(id),
+  	FOREIGN KEY (hashtag_id) REFERENCES hashtags(id),
   	FOREIGN KEY (feedback_id) REFERENCES feedback(id)
 );
 

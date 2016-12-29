@@ -5,6 +5,14 @@ namespace Platypus\Model;
 class Feedback extends \Illuminate\Database\Eloquent\Model
 {
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'feedback';
+
+
+    /**
      * Get the user for the feedback.
      */
     public function user()
@@ -32,7 +40,7 @@ class Feedback extends \Illuminate\Database\Eloquent\Model
     /**
      * The hashtags that belong to the feedback.
      */
-    public function hashtag()
+    public function hashtags()
     {
         return $this->belongsToMany('Platypus\Model\Hashtag');
     }
