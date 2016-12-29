@@ -18,7 +18,7 @@ $dotenv->load();
 
 session_start();
 
-require __DIR__ . '/../helpers.php';
+require __DIR__ . '/../src/helpers.php';
 
 // Instantiate the app
 $settings = require __DIR__ . '/../src/settings.php';

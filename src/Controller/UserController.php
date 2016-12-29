@@ -36,13 +36,13 @@ class UserController
             return $response->withJson(["error" => "User already exists."], 409);
         }
 
-        $userCreated = $this->userService->createUser($request_params);
+        $createdUser = $this->userService->createUser($request_params);
 
-        if(!$userCreated) {
+        if($createdUser === null) {
             return $response->withJson(["error" => "Failed to create user."], 422);
         }
 
-        return $response->withJson(["success" => 1]);
+        return $response->withJson(["success" => 1, "new_user" => $createdUser]);
     }
 
 }
