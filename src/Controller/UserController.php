@@ -23,23 +23,28 @@ class UserController
     {
         $user = $this->userService->getUser($args['id']);
         if($user === null) {
-            return $response->withJson(["error" => "User doesn't exist."], 404);
+            return $response->withJson(["errors" => ["User doesn't exist."]], 404);
         }
         return $response->withJson($user, 200);
     }
 
     public function createUser($request, $response, $args)
     {
+        if($request->getAttribute('has_errors')) {
+            $errors = $request->getAttribute('errors');
+            return $response->withJson(["errors" => $errors], 422);
+        }
+
         $request_params = $request->getParsedBody();
         if($this->userService->userWithEmailExists($request_params["mailaddress"])) {
             // fixme: maybe solve this using the illuminate validators
-            return $response->withJson(["error" => "User already exists."], 409);
+            return $response->withJson(["errors" => ["User already exists."]], 409);
         }
 
         $createdUser = $this->userService->createUser($request_params);
 
         if($createdUser === null) {
-            return $response->withJson(["error" => "Failed to create user."], 422);
+            return $response->withJson(["errors" => ["Failed to create user."]], 422);
         }
 
         return $response->withJson(["success" => 1, "new_user" => $createdUser]);

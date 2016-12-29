@@ -1,5 +1,11 @@
 <?php
+
+use DavidePastore\Slim\Validation\Validation;
+use Respect\Validation\Validator as v;
 // Routes
+
+
+// Find more info about what validators are avilalbe here: https://github.com/Respect/Validation/blob/master/docs/VALIDATORS.md
 
 $app->get('/', function ($request, $response, $args) {
     // Sample log message
@@ -15,7 +21,11 @@ $app->group('/api/v1', function() use ($app) {
     $app->get('/user', '\Platypus\Controller\UserController:getUsers');
     $app->get('/user/{id}', '\Platypus\Controller\UserController:getUser');
 
-    $app->post('/user', '\Platypus\Controller\UserController:createUser');
+    $app->post('/user', '\Platypus\Controller\UserController:createUser')
+        ->add(new Validation([
+            'mailaddress' => v::email(),
+            'password' => v::length(8, null)
+        ]));
 
     //FEEDBACK
     $app->get('/feedback', '\Platypus\Controller\FeedbackController:getFeedback');
