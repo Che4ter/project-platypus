@@ -15,13 +15,6 @@ class UserControllerTest extends BaseTestCase
         $this->rollback();
     }
 
-    private function createTestUser() {
-        return $this->runApp('POST', '/api/v1/user', [
-            'mailaddress' => 'test@mail.com',
-            'password' => 'testpw',
-        ]);
-    }
-
     public function test_UserRequest_returnsAllUsers()
     {
         $response = $this->runApp('GET', '/api/v1/user');
@@ -46,9 +39,10 @@ class UserControllerTest extends BaseTestCase
 
     public function test_UserRequest_getUser() {
         $response = $this->createTestUser();
+        $this->assertEquals(200, $response->getStatusCode());
+
         $response = $this->runApp('GET', '/api/v1/user/' . json_decode($response->getBody())->new_user->id);
 
-        $this->assertEquals(200, $response->getStatusCode());
         $body = json_decode($response->getBody());
         $this->assertEquals('test@mail.com', $body->mailaddress);
         // make sure password is not readable

@@ -93,4 +93,11 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     protected function rollback() {
         $this->app->getContainer()['db']->getDatabaseManager()->rollback();
     }
+
+    protected function createTestUser() {
+        return $this->runApp('POST', '/api/v1/user', [
+            'mailaddress' => 'test@mail.com',
+            'password' => 'testpw',
+        ]);
+    }
 }
