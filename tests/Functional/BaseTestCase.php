@@ -22,6 +22,34 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
      */
     protected $withMiddleware = true;
 
+    protected $app;
+
+    public function createApp() {
+
+        // load values from .env, use env() to retrieve them
+        $dotenv = new \Dotenv\Dotenv(__DIR__ . '/../..', '.testenv');
+        $dotenv->load();
+
+        require __DIR__ . '/../../src/helpers.php';
+
+        // Use the application settings
+        $settings = require __DIR__ . '/../../src/settings.php';
+
+        // Instantiate the application
+        $this->app = $app = new App($settings);
+
+        // Set up dependencies
+        require __DIR__ . '/../../src/dependencies.php';
+
+        // Register middleware
+        if ($this->withMiddleware) {
+            require __DIR__ . '/../../src/middleware.php';
+        }
+
+        // Register routes
+        require __DIR__ . '/../../src/routes.php';
+    }
+
     /**
      * Process the application given a request method and URI
      *
@@ -51,27 +79,18 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         // Set up a response object
         $response = new Response();
 
-        // Use the application settings
-        $settings = require __DIR__ . '/../../src/settings.php';
-
-        // Instantiate the application
-        $app = new App($settings);
-
-        // Set up dependencies
-        require __DIR__ . '/../../src/dependencies.php';
-
-        // Register middleware
-        if ($this->withMiddleware) {
-            require __DIR__ . '/../../src/middleware.php';
-        }
-
-        // Register routes
-        require __DIR__ . '/../../src/routes.php';
-
         // Process the application
-        $response = $app->process($request, $response);
+        $response = $this->app->process($request, $response);
 
         // Return the response
         return $response;
+    }
+
+    protected function beginTransaction() {
+        $this->app->getContainer()['db']->getDatabaseManager()->beginTransaction();
+    }
+
+    protected function rollback() {
+        $this->app->getContainer()['db']->getDatabaseManager()->rollback();
     }
 }
