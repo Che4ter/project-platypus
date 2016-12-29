@@ -11,7 +11,14 @@ if (PHP_SAPI == 'cli-server') {
 
 require __DIR__ . '/../vendor/autoload.php';
 
+
+// load values from .env, use env() to retrieve them
+$dotenv = new \Dotenv\Dotenv(__DIR__ . '/..');
+$dotenv->load();
+
 session_start();
+
+require __DIR__ . '/../helpers.php';
 
 // Instantiate the app
 $settings = require __DIR__ . '/../src/settings.php';

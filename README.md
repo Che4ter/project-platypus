@@ -58,3 +58,10 @@ use localhost:8008 to access the website (/user for a first example)
 
 run "php composer.phar run test" to run all tests
 
+### Database
+
+Import the database:
+
+    mysql -uroot < db.sql
+
+Ry default it is assumed that there is a mysql instance running on 127.0.0.1:3306 with the users and the database created in db.sql. You can change these settings by copying `.env.example` to `.env` and change the values accordingly.
