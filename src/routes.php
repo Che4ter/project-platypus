@@ -20,6 +20,9 @@ $app->group('/api/v1', function() use ($app) {
     //FEEDBACK
     $app->get('/feedback', '\Platypus\Controller\FeedbackController:getFeedback');
 
+    $app->post('/feedback', '\Platypus\Controller\FeedbackController:createFeedback');
+
+
     //Authentication
     $app->post('/token', '\Platypus\Controller\AuthenticationController:getToken');
 

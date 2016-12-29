@@ -21,4 +21,15 @@ class FeedbackService
             $query->select('id','moodname');
         }))->get();
     }
+
+    public function createFeedback($request_params)
+    {
+        $new_feedback = new Feedback();
+        $new_feedback->feedback_text = $request_params["feedback_text"];
+        $new_feedback->moods_id = $request_params["moods_id"];
+        $new_feedback->user_id = $request_params["user_id"];
+        // $new_feedback->hashtags = $request_params["hashtags"];
+        $new_feedback->save();
+        return $new_feedback;
+    }
 }
