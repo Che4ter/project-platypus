@@ -3,7 +3,7 @@
 namespace Tests\Unit;
 
 use Platypus\Controller\UserController;
-use Platypus\Model\UserService;
+use Platypus\Service\UserService;
 use Slim\Container;
 use Slim\Http\Response;
 
