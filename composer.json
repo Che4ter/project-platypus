@@ -19,7 +19,8 @@
         "illuminate/database": "~5.3",
         "tuupola/slim-jwt-auth": "^2.3",
         "vlucas/phpdotenv": "^2.4",
-        "davidepastore/slim-validation": "^0.4.0"
+        "davidepastore/slim-validation": "^0.4.0",
+        "firebase/php-jwt": "^4.0"
     },
     "require-dev": {
         "phpunit/phpunit": ">=4.8 < 6.0"
