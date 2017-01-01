@@ -8,3 +8,6 @@ RewriteEngine On
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.php [QSA,L]
+
+# make sure we can access the Authorization header from within PHP
+RewriteRule .* - [env=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
