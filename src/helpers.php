@@ -10,6 +10,7 @@
 
 if(!function_exists('env')) {
     function env(string $varname, string $default_value = "") : string {
-        return isset($_ENV[$varname]) ? $_ENV[$varname] : $default_value;
+        $value = getenv($varname);
+        return $value === FALSE ? $default_value : $value;
     }
 }
