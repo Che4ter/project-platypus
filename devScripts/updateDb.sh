@@ -14,6 +14,20 @@ env_file=.env
 seed=0
 renew=0
 
+function printHelp {
+   echo "usage $0 [--docker containername] [--seed] [--test] [--renew]"
+      echo "Reinitializes/updates the tables in database defined in .env or .testenv"
+      echo "WARNING: You will loose your data!!!!!!"
+      echo ""
+      echo " --docker containername     use the given docker container"
+      echo "                            to host the database"
+      echo " --seed                     seed the database with some dummy data"
+      echo " --test                     use the test database instead of the"
+      echo "                            database defined in .env"
+      echo " --renew                    drop the database first"
+      exit 1;
+}
+
 while [ $# -gt 0 ]; do
    case "$1" in
        --docker)
@@ -32,18 +46,10 @@ while [ $# -gt 0 ]; do
           renew=1
        ;;
        --help)
-           echo "usage $0 [--docker containername] [--seed] [--test] [--renew]"
-           echo "Reinitializes/updates the tables in database defined in .env or .testenv"
-           echo "WARNING: You will loose your data!!!!!!"
-           echo ""
-           echo " --docker containername     use the given docker container"
-           echo "                            to host the database"
-           echo " --seed                     seed the database with some dummy data"
-           echo " --test                     use the test database instead of the"
-           echo "a                           database defined in .env"
-           echo " --renew                    drop the database first"
-           exit 1;
+          printHelp 
        ;;
+       *)
+          printHelp
    esac
    shift
 done
