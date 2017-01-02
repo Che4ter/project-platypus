@@ -54,16 +54,17 @@ run "php composer.phar run test" to run all tests
 
 ### Database
 
-Move the `.env.example` to .env and set up your database correctly.
+Move the `.env.example` to `.env` and set up your database correctly.
 Only MySQL is supported as of now (because of the SQL script to import the database, eloquent would support other databases as well).
 
-Use the `devScripts/updateDb.sh` script to bring your database to the newest state. **Warning**: This script will delete your old data and SHOULD NOT be run in production environments.
+Use the `devScripts/updateDb.sh` script to bring your database to the newest state.  
+**Warning**: This script will delete your old data and SHOULD NOT be run in production environments.
 
 Use this if if you want to initialise the database:
 
-   devScripts/updateDb.sh --renew --seed
+    devScripts/updateDb.sh --renew --seed
 
-**Warning**: --renew will *drop the database* you defined in `.env`.
+**Warning**: `--renew` will *drop the database* you defined in `.env`.
 Run it without the renew if you want to set the permissions and create the database yourself.
 
 Use the `--docker` option to use the mysqlclient inside a docker container.
@@ -79,4 +80,4 @@ the testsin tests/Functional use a testing database which can be configured in `
 
 To initialise the test database used by the phpunit tests use the following command:
 
-   devScripts/updateDb.sh --renew --seed --test
+    devScripts/updateDb.sh --renew --seed --test
