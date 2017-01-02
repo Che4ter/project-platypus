@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 DBDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 if [ "--test" = "$1" ]; then

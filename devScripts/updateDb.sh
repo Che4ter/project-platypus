@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # abort if any of this fails
 set -b
