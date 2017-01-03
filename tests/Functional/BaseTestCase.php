@@ -24,6 +24,8 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
 
     protected $app;
 
+    protected $settings;
+
     public function createApp() {
 
         // load values from .env, use env() to retrieve them
@@ -33,7 +35,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         require __DIR__ . '/../../src/helpers.php';
 
         // Use the application settings
-        $settings = require __DIR__ . '/../../src/settings.php';
+        $this->settings = $settings = require __DIR__ . '/../../src/settings.php';
 
         // Instantiate the application
         $this->app = $app = new App($settings);

@@ -14,10 +14,7 @@ class UserService
     }
 
     public function userWithEmailExists($email) {
-        if(is_null(User::where('mailaddress','=', $email)->first()))
-            return false;
-        else
-            return true;
+        return !is_null($this->getUserByMailaddress($email));
     }
 
     public function getUsers()
@@ -29,6 +26,11 @@ class UserService
     {
         return User::find($id);
     }
+
+    public function getUserByMailaddress($email) {
+        return User::where('mailaddress', $email)->first();
+    }
+
 
     public function createUser($request_params)
     {

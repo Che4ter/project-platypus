@@ -27,13 +27,16 @@ $app->group('/api/v1', function() use ($app) {
             'password' => v::length(8, null)
         ]));
 
+    //AUTHENTICATION
+    $app->post('/auth/token', '\Platypus\Controller\SessionController:getToken')
+        ->add(new Validation([
+            'mailaddress' => v::notEmpty(),
+            'password' => v::notEmpty()
+        ]));
+
+
     //FEEDBACK
     $app->get('/feedback', '\Platypus\Controller\FeedbackController:getFeedback');
 
     $app->post('/feedback', '\Platypus\Controller\FeedbackController:createFeedback');
-
-
-    //Authentication
-    $app->post('/token', '\Platypus\Controller\AuthenticationController:getToken');
-
 });

@@ -1,6 +1,6 @@
 <?php
-// DIC configuration
 
+// DIC configuration
 $container = $app->getContainer();
 
 // view renderer
@@ -39,3 +39,11 @@ $container['UserService'] = function ($c) {
 $container['FeedbackService'] = function ($c) {
     return new Platypus\Service\FeedbackService($c);
 };
+
+$container['SessionService'] = function($c) {
+    return new Platypus\Service\SessionService($c);
+};
+
+
+// The clients time must not be more than one minoute away from the server time.
+Firebase\JWT\JWT::$leeway = 60;

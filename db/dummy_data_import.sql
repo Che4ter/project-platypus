@@ -18,12 +18,13 @@ INSERT INTO roles (id,rolename,can_delete,can_write,can_report,can_vote,can_edit
 	(3,"Dozent",0,0,1,0,0,0,0,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
 	(9,"Administrator",1,1,1,1,1,1,1,UTC_TIMESTAMP(),UTC_TIMESTAMP());
 
+/** password for all users is '1234' **/
 INSERT INTO users (id,mailaddress,password,role_id,status,created_at,updated_at) VALUES
-	(1,"admin@platypus.ch","1234",9,1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
-	(2,"student1@stud.hslu.platypus.ch","1234",9,1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
-	(3,"student2@stud.hslu.platypus.ch","1234",9,0,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
-	(4,"moderator@stud.hslu.platypus.ch","1234",9,1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
-	(5,"dozent@stud.hslu.platypus.ch","1234",9,1,UTC_TIMESTAMP(),UTC_TIMESTAMP());
+	(1,"admin@platypus.ch","$2y$10$u0mIzbRSakYC7OpbYUS1Xe9Dt1VdnvyTz2NByxnh3GxRprvDCKXQ6",9,1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
+	(2,"student1@stud.hslu.platypus.ch","$2y$10$u0mIzbRSakYC7OpbYUS1Xe9Dt1VdnvyTz2NByxnh3GxRprvDCKXQ6",9,1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
+	(3,"student2@stud.hslu.platypus.ch","$2y$10$u0mIzbRSakYC7OpbYUS1Xe9Dt1VdnvyTz2NByxnh3GxRprvDCKXQ6",9,0,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
+	(4,"moderator@stud.hslu.platypus.ch","$2y$10$u0mIzbRSakYC7OpbYUS1Xe9Dt1VdnvyTz2NByxnh3GxRprvDCKXQ6",9,1,UTC_TIMESTAMP(),UTC_TIMESTAMP()),
+	(5,"dozent@stud.hslu.platypus.ch","$2y$10$u0mIzbRSakYC7OpbYUS1Xe9Dt1VdnvyTz2NByxnh3GxRprvDCKXQ6",9,1,UTC_TIMESTAMP(),UTC_TIMESTAMP());
 
 INSERT INTO hashtypes(id,hashtype_description,created_at,updated_at) VALUES
 	(1,"Semester",UTC_TIMESTAMP(),UTC_TIMESTAMP()),

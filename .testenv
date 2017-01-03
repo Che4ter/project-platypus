@@ -1,0 +1,8 @@
+DB_DRIVER=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_NAME=platypus_test
+DB_USER=platypus
+DB_PASSWORD=platypus
+JWT_SECRET=this-is-not-a-secure-secret-just-used-for-testing
+JWT_TOKEN_TIMEOUT=60
