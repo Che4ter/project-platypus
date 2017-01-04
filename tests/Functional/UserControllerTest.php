@@ -16,7 +16,8 @@ class UserControllerTest extends BaseTestCase
     }
 
     public function test_UserRequest_returnsAllUsers() {
-        $response = $this->runApp('GET', '/api/v1/user');
+        $adminUser = $this->createAuthenticatedTestUser('admin@yolo.com', '12345678', ROLE_ID_ADMIN);
+        $response = $this->runAppAs($adminUser, 'GET', '/api/v1/user');
         $this->assertEquals(200, $response->getStatusCode());
         $users = json_decode($response->getBody());
         $this->assertTrue(is_array($users));
@@ -48,13 +49,12 @@ class UserControllerTest extends BaseTestCase
 
 
     public function test_UserRequest_getUser() {
-        $response = $this->makeCreateTestUserRequest();
-        $this->assertEquals(200, $response->getStatusCode());
-
-        $response = $this->runApp('GET', '/api/v1/user/' . json_decode($response->getBody())->new_user->id);
+        $user = $this->createAuthenticatedTestUser('testuser15@mail.com', '12345678');
+        #$userToken = $this->aquireAuthTokenForUser('testuser15@mail.com', '12345678');
+        $response = $this->runAppAs($user, 'GET', '/api/v1/user/' . $user->id);
 
         $body = json_decode($response->getBody());
-        $this->assertEquals('test@mail.com', $body->mailaddress);
+        $this->assertEquals('testuser15@mail.com', $body->mailaddress);
         // make sure password is not readable
         $this->assertTrue(!isset($body->password));
     }

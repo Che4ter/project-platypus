@@ -6,6 +6,12 @@ use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Http\Environment;
+use Platypus\Model\User;
+
+define('ROLE_ID_ADMIN', 9);
+
+define('DEFAULT_TESTUSER_EMAIL', 'test@mail.com');
+define('DEFAULT_TESTUSER_PASSWORD', '12345678');
 
 /**
  * This is an example class that shows how you could set up a method that
@@ -52,16 +58,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         require __DIR__ . '/../../src/routes.php';
     }
 
-    /**
-     * Process the application given a request method and URI
-     *
-     * @param string $requestMethod the request method (e.g. GET, POST, etc.)
-     * @param string $requestUri the request URI
-     * @param array|object|null $requestData the request data
-     * @return \Slim\Http\Response
-     */
-    public function runApp($requestMethod, $requestUri, $requestData = null)
-    {
+    private function createAppRequest($requestMethod, $requestUri, $requestData = null, $requestToken = null) {
         // Create a mock environment for testing with
         $environment = Environment::mock(
             [
@@ -78,6 +75,15 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
             $request = $request->withParsedBody($requestData);
         }
 
+        // send authentication token if available
+        if (isset($requestToken)) {
+            $request = $request->withHeader('Authorization', 'Bearer ' . $requestToken);
+        }
+
+        return $request;
+    }
+
+    private function processRequest($request) {
         // Set up a response object
         $response = new Response();
 
@@ -86,6 +92,26 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
 
         // Return the response
         return $response;
+    }
+
+    /**
+     * Process the application given a request method and URI
+     *
+     * @param string $requestMethod the request method (e.g. GET, POST, etc.)
+     * @param string $requestUri the request URI
+     * @param array|object|null $requestData the request data
+     * @return \Slim\Http\Response
+     */
+    public function runApp($requestMethod, $requestUri, $requestData = null)
+    {
+        $request = $this->createAppRequest($requestMethod, $requestUri, $requestData);
+        return $this->processRequest($request);
+    }
+
+    public function runAppAs($user, $requestMethod, $requestUri, $requestData = null)
+    {
+        $request = $this->createAppRequest($requestMethod, $requestUri, $requestData, $user->token);
+        return $this->processRequest($request);
     }
 
     protected function beginTransaction() {
@@ -97,8 +123,8 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     }
 
     protected function makeCreateTestUserRequest($email = null, $password = null) {
-        if($email === null) $email = 'test@mail.com';
-        if($password === null) $password = 'password';
+        if($email === null) $email = DEFAULT_TESTUSER_EMAIL;
+        if($password === null) $password = DEFAULT_TESTUSER_PASSWORD;
 
         return $this->runApp('POST', '/api/v1/user', [
             'mailaddress' => $email,
@@ -122,11 +148,23 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     }
 
     protected function aquireAuthTokenForUser($email, $password) {
-        $responseFail = $this->runApp('POST', '/api/v1/auth/token', [
+        $response = $this->runApp('POST', '/api/v1/auth/token', [
             'mailaddress' => $email,
             'password' => $password
         ]);
 
-        $this->assertEquals(201, $responseFail->getStatusCode(), "Counldn't aquire auth token for test user");
+        $this->assertEquals(201, $response->getStatusCode(), "Counldn't aquire auth token for test user");
+        $json_body = json_decode($response->getBody());
+        $this->assertTrue(is_object($json_body), "Invalid JSON returned for authentication of a test user");
+        return $json_body->token;
+    }
+
+    protected function createAuthenticatedTestUser($email = null, $password = null, $role_id = 1) {
+        if($email === null) $email = DEFAULT_TESTUSER_EMAIL;
+        if($password === null) $password = DEFAULT_TESTUSER_PASSWORD;
+
+        $user = $this->createTestUser($email, $password, $role_id);
+        $user->token = $this->aquireAuthTokenForUser($email, $password);
+        return $user;
     }
 }

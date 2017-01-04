@@ -74,4 +74,11 @@ class SessionControllerTest extends BaseTestCase
     public function test_SessionRequest_getToken_success() {
         $this->aquireAuthTokenForUser($this->user->mailaddress, '12345678');
     }
+
+    public function test_SessionRequest_useInvalidTokenForAuthentication_success() {
+    }
+
+    public function test_SessionRequest_useTokenForAuthentication_success() {
+        $this->aquireAuthTokenForUser($this->user->mailaddress, '12345678');
+    }
 }
