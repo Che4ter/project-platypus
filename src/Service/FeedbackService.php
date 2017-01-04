@@ -13,7 +13,7 @@ class FeedbackService
         $this->ci = $ci;
     }
 
-    public function getFeedback()
+    public function getFeedbacks()
     {
 
         return Feedback::with(array('votes'=>function($query){
@@ -21,6 +21,11 @@ class FeedbackService
         },'hashtags','moods'=>function($query){
             $query->select('id','moodname');
         }))->get();
+    }
+
+
+    public function getFeedback($id) {
+        return Feedback::find($id);
     }
 
     public function createFeedback($request_params)

@@ -34,7 +34,8 @@ $app->group('/api/v1', function() use ($app) {
 
 
     //FEEDBACK
-    $app->get('/feedback', '\Platypus\Controller\FeedbackController:getFeedback');
+    $app->get('/feedback', '\Platypus\Controller\FeedbackController:getFeedbacks');
+    $app->get('/feedback/{id}', '\Platypus\Controller\FeedbackController:getFeedback');
 });
 
 // needs authentication with a JWT token

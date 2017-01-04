@@ -14,9 +14,9 @@ class FeedbackController
         $this->feedbackService = $ci->get('FeedbackService');
     }
 
-    public function getFeedback($request, $response, $args)
+    public function getFeedbacks($request, $response, $args)
     {
-        $data = $this->feedbackService->getFeedback();
+        $data = $this->feedbackService->getFeedbacks();
 
         //Code to define what to return
         /*$data->map(function ($feedback){
@@ -25,8 +25,17 @@ class FeedbackController
         return $response->withJson($data, 200);
     }
 
+    public function getFeedback($request, $response, $args)
+    {
+        $data = $this->feedbackService->getFeedback($args['id']);
+        return $response->withJson($data, 200);
+    }
+
     public function createFeedback($request, $response, $args)
     {
+        //FIXME: make sure to use the user_id provided by the JWT token and not the one provided by the user
+        //       a user shoulnd't be able to post on behalf of an other user
+        //       Fix test case as well because user_id is passed at the moment
         $request_params = $request->getParsedBody();
 
         $createdFeedback = $this->feedbackService->createFeedback($request_params);
