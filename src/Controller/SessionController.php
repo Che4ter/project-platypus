@@ -3,7 +3,6 @@
 namespace Platypus\Controller;
 use Interop\Container\ContainerInterface;
 use Platypus\Model\User;
-use Firebase\JWT\JWT;
 
 class SessionController
 {
