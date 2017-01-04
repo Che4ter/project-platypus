@@ -38,11 +38,6 @@ class SessionController
      */
     public function getToken($request, $response, $args)
     {
-        if($request->getAttribute('has_errors')) {
-            $errors = $request->getAttribute('errors');
-            return $response->withJson(["errors" => $errors], 422);
-        }
-
         $request_params = $request->getParsedBody();
         $user = $this->userService->getUserByMailaddress($request_params["mailaddress"]);
         if($user !== null && password_verify($request_params['password'], $user->password)) {
@@ -59,7 +54,5 @@ class SessionController
         } else {
             return $response->withJson(["errors" => ["Incorrect mailaddress and/or password."]], 403);
         }
-
-
     }
 }

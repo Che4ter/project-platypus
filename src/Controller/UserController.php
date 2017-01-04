@@ -30,11 +30,6 @@ class UserController
 
     public function createUser($request, $response, $args)
     {
-        if($request->getAttribute('has_errors')) {
-            $errors = $request->getAttribute('errors');
-            return $response->withJson(["errors" => $errors], 422);
-        }
-
         $request_params = $request->getParsedBody();
         if($this->userService->userWithEmailExists($request_params["mailaddress"])) {
             return $response->withJson(["errors" => ["User already exists."]], 409);

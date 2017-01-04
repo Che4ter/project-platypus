@@ -2,6 +2,7 @@
 
 use DavidePastore\Slim\Validation\Validation;
 use Respect\Validation\Validator as v;
+use Platypus\Middleware\ValidateRequest;
 // Routes
 
 
@@ -20,6 +21,7 @@ $app->get('/', function ($request, $response, $args) {
 $app->group('/api/v1', function() use ($app) {
     // USER
     $app->post('/user', '\Platypus\Controller\UserController:createUser')
+        ->add(new ValidateRequest())
         ->add(new Validation([
             'mailaddress' => v::email(),
             'password' => v::length(8, null)
@@ -27,6 +29,7 @@ $app->group('/api/v1', function() use ($app) {
 
     // GET AUTHENTICATION TOKEN
     $app->post('/auth/token', '\Platypus\Controller\SessionController:getToken')
+        ->add(new ValidateRequest())
         ->add(new Validation([
             'mailaddress' => v::notEmpty(),
             'password' => v::notEmpty()
