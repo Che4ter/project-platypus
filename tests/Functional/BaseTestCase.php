@@ -96,7 +96,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         $this->app->getContainer()['db']->getDatabaseManager()->rollback();
     }
 
-    protected function createTestUser($email = null, $password = null) {
+    protected function makeCreateTestUserRequest($email = null, $password = null) {
         if($email === null) $email = 'test@mail.com';
         if($password === null) $password = 'password';
 
@@ -104,5 +104,29 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
             'mailaddress' => $email,
             'password' => $password,
         ]);
+
+    }
+
+    protected function createTestUser($email = null, $password = null, $role_id = 1) {
+        $this->assertTrue($role_id > 0, "role_id must be greater than 0 for creating a test user");
+        $response = $this->makeCreateTestUserRequest($email, $password);
+        $this->assertEquals(200, $response->getStatusCode(), "User registration is broken for test users!");
+        $json_body = json_decode($response->getBody());
+        $this->assertTrue(is_object($json_body), "Invalid JSON returned for user regisration of a test user!");
+        if($role_id > 1) {
+            $user = User::where('mailaddress', $email)->first();
+            $user->role_id = $role_id;
+            $this->assertTrue($user->save(), "Couldn't save test user with role_id > 1 (not the default)");
+        }
+        return $json_body->new_user;
+    }
+
+    protected function aquireAuthTokenForUser($email, $password) {
+        $responseFail = $this->runApp('POST', '/api/v1/auth/token', [
+            'mailaddress' => $email,
+            'password' => $password
+        ]);
+
+        $this->assertEquals(201, $responseFail->getStatusCode(), "Counldn't aquire auth token for test user");
     }
 }

@@ -15,8 +15,7 @@ class UserControllerTest extends BaseTestCase
         $this->rollback();
     }
 
-    public function test_UserRequest_returnsAllUsers()
-    {
+    public function test_UserRequest_returnsAllUsers() {
         $response = $this->runApp('GET', '/api/v1/user');
         $this->assertEquals(200, $response->getStatusCode());
         $users = json_decode($response->getBody());
@@ -24,34 +23,32 @@ class UserControllerTest extends BaseTestCase
     }
 
     public function test_UserRequest_createUser() {
-        $response = $this->createTestUser();
-
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->createTestUser();
         $this->assertTrue(User::where('mailaddress', 'test@mail.com')->first() != null);
     }
 
     public function test_UserRequest_createUser_alreadyExists() {
-        $response = $this->createTestUser();
-        $responseFail = $this->createTestUser();
+        $response = $this->makeCreateTestUserRequest();
+        $responseFail = $this->makeCreateTestUserRequest();
 
         $this->assertEquals(409, $responseFail->getStatusCode());
     }
 
     public function test_UserRequest_createUser_invalidMail() {
-        $responseFail = $this->createTestUser("nomail");
+        $responseFail = $this->makeCreateTestUserRequest("nomail");
 
         $this->assertEquals(422, $responseFail->getStatusCode());
     }
 
     public function test_UserRequest_createUser_shortPw() {
-        $responseFail = $this->createTestUser("valid@mail.com", "shortpw");
+        $responseFail = $this->makeCreateTestUserRequest("valid@mail.com", "shortpw");
 
         $this->assertEquals(422, $responseFail->getStatusCode());
     }
 
 
     public function test_UserRequest_getUser() {
-        $response = $this->createTestUser();
+        $response = $this->makeCreateTestUserRequest();
         $this->assertEquals(200, $response->getStatusCode());
 
         $response = $this->runApp('GET', '/api/v1/user/' . json_decode($response->getBody())->new_user->id);

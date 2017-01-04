@@ -14,7 +14,7 @@ class SessionControllerTest extends BaseTestCase
     public function setUp() {
         $this->createApp();
         $this->beginTransaction();
-        $this->user = json_decode($this->createTestUser('test@mail.com', '12345678')->getBody())->new_user;
+        $this->user = $this->createTestUser('test@mail.com', '12345678');
         $this->originalJwtSecret = env('JWT_SECRET', '');
         $this->originalJwtTokenTimeout = env('JWT_TOKEN_TIMEOUT', '');
     }
@@ -72,12 +72,6 @@ class SessionControllerTest extends BaseTestCase
     }
 
     public function test_SessionRequest_getToken_success() {
-        $responseFail = $this->runApp('POST', '/api/v1/auth/token', [
-            'mailaddress' => $this->user->mailaddress,
-            'password' => '12345678'
-        ]);
-
-        $this->assertEquals(201, $responseFail->getStatusCode());
-
+        $this->aquireAuthTokenForUser($this->user->mailaddress, '12345678');
     }
 }
