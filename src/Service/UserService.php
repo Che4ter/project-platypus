@@ -3,6 +3,7 @@
 namespace Platypus\Service;
 use Interop\Container\ContainerInterface;
 use Platypus\Model\User;
+use Platypus\Model\Role;
 
 class UserService
 {
@@ -44,7 +45,7 @@ class UserService
         //todo: add error handling
         //todo: remove salt from db
         $new_user->password = password_hash($request_params["password"], PASSWORD_BCRYPT);
-        $new_user->role_id = 1;
+        $new_user->role_id = Role::ID_USER;
         $new_user->status = 0;
         $new_user->save();
         return $new_user;

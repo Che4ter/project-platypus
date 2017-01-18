@@ -8,8 +8,6 @@ use Slim\Http\Response;
 use Slim\Http\Environment;
 use Platypus\Model\User;
 
-define('ROLE_ID_ADMIN', 9);
-
 define('DEFAULT_TESTUSER_EMAIL', 'test@mail.com');
 define('DEFAULT_TESTUSER_PASSWORD', '12345678');
 

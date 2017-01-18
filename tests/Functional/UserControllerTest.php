@@ -2,6 +2,7 @@
 
 namespace Tests\Functional;
 use Platypus\Model\User;
+use Platypus\Model\Role;
 
 class UserControllerTest extends BaseTestCase
 {
@@ -15,12 +16,18 @@ class UserControllerTest extends BaseTestCase
         $this->rollback();
     }
 
-    public function test_UserRequest_returnsAllUsers() {
-        $adminUser = $this->createAuthenticatedTestUser('admin@yolo.com', '12345678', ROLE_ID_ADMIN);
+    public function test_UserRequest_returnsAllUsers_forAdmin() {
+        $adminUser = $this->createAuthenticatedTestUser('admin@yolo.com', '12345678', Role::ID_ADMIN);
         $response = $this->runAppAs($adminUser, 'GET', '/api/v1/user');
         $this->assertEquals(200, $response->getStatusCode());
         $users = json_decode($response->getBody());
         $this->assertTrue(is_array($users));
+    }
+
+    public function test_UserRequest_doesntReturnAllUsers_forRegularUser() {
+        $user = $this->createAuthenticatedTestUser('user@yolo.com', '12345678', Role::ID_USER);
+        $response = $this->runAppAs($user, 'GET', '/api/v1/user');
+        $this->assertEquals(401, $response->getStatusCode());
     }
 
     public function test_UserRequest_createUser() {

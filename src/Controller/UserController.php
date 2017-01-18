@@ -6,6 +6,7 @@ use Platypus\Model\User;
 
 class UserController
 {
+    private $container;
     private $userService;
 
     public function __construct(ContainerInterface $ci)

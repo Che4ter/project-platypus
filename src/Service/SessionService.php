@@ -22,7 +22,7 @@ class SessionService {
             "exp" => $future->getTimeStamp(),
             "jti" => base64_encode(random_bytes(16)),
             "sub" => $user->id,
-            "scope" => $user->role_id
+            "role_id" => $user->role_id
         ];
 
         $token = JWT::encode($payload, $secret, "HS256");

@@ -3,6 +3,9 @@
 use DavidePastore\Slim\Validation\Validation;
 use Respect\Validation\Validator as v;
 use Platypus\Middleware\ValidateRequest;
+use Platypus\Middleware\AuthorizeRequest;
+use Platypus\Model\Role;
+
 // Routes
 
 
@@ -44,14 +47,22 @@ $app->group('/api/v1', function() use ($app) {
 // needs authentication with a JWT token
 $app->group('/api/v1', function() use ($app) {
     //USER
-    $app->get('/user', '\Platypus\Controller\UserController:getUsers');
+    $app->get('/user', '\Platypus\Controller\UserController:getUsers')
+        ->add(new AuthorizeRequest($app->getContainer(), Role::ID_ADMIN));
+
     $app->get('/user/{id}', '\Platypus\Controller\UserController:getUser');
 
     $app->post('/feedback', '\Platypus\Controller\FeedbackController:createFeedback');
 
-})->add(new \Slim\Middleware\JwtAuthentication([
+})->add(new AuthorizeRequest($app->getContainer(), Role::ID_USER))
+    ->add(new \Slim\Middleware\JwtAuthentication([
         "secret" => env("JWT_SECRET"),
+        "callback" => function($request, $response, $arguments) use ($app) {
+            // store decoded jwt token in container
+            $container = $app->getContainer();
+            $container["jwt"] = $arguments["decoded"];
+        },
         "error" => function($request, $response, $args) {
-            return $response->withJson(["errors" => ["JWT authentication via Authentication-HTTP-Header failed."]], 401);
+            return $response->withJson(["errors" => ["JWT authentication via Authorization-HTTP-Header failed."]], 401);
         }
     ]));
