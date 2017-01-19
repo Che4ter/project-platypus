@@ -57,8 +57,8 @@ class UserControllerTest extends BaseTestCase
 
     public function test_UserRequest_getUser() {
         $user = $this->createAuthenticatedTestUser('testuser15@mail.com', '12345678');
-        #$userToken = $this->aquireAuthTokenForUser('testuser15@mail.com', '12345678');
         $response = $this->runAppAs($user, 'GET', '/api/v1/user/' . $user->id);
+        $this->assertEquals(200, $response->getStatusCode());
 
         $body = json_decode($response->getBody());
         $this->assertEquals('testuser15@mail.com', $body->mailaddress);
