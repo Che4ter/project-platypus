@@ -61,8 +61,9 @@ $app->group('/api/v1', function() use ($app) {
             // store decoded jwt token in container
             $container = $app->getContainer();
             $container["jwt"] = $arguments["decoded"];
+            return true;
         },
         "error" => function($request, $response, $args) {
-            return $response->withJson(["errors" => ["JWT authentication via Authorization-HTTP-Header failed."]], 401);
+            return $response->withJson(["errors" => ["JWT authentication via Authorization-HTTP-Header failed because of: " . $args['message']]], 401);
         }
     ]));
