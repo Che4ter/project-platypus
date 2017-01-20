@@ -4,6 +4,7 @@ use DavidePastore\Slim\Validation\Validation;
 use Respect\Validation\Validator as v;
 use Platypus\Middleware\ValidateRequest;
 use Platypus\Middleware\AuthorizeRequest;
+use Platypus\Middleware\AddJwtToRequest;
 use Platypus\Model\Role;
 
 // Routes
@@ -48,13 +49,14 @@ $app->group('/api/v1', function() use ($app) {
 $app->group('/api/v1', function() use ($app) {
     //USER
     $app->get('/user', '\Platypus\Controller\UserController:getUsers')
-        ->add(new AuthorizeRequest($app->getContainer(), Role::ID_ADMIN));
+        ->add(new AuthorizeRequest(Role::ID_ADMIN));
 
     $app->get('/user/{id}', '\Platypus\Controller\UserController:getUser');
 
     $app->post('/feedback', '\Platypus\Controller\FeedbackController:createFeedback');
 
-})->add(new AuthorizeRequest($app->getContainer(), Role::ID_USER))
+})->add(new AuthorizeRequest(Role::ID_USER))
+    ->add(new AddJwtToRequest($app->getContainer()))
     ->add(new \Slim\Middleware\JwtAuthentication([
         "secret" => env("JWT_SECRET"),
         "callback" => function($request, $response, $arguments) use ($app) {
