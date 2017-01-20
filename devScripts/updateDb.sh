@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # abort if any of this fails
 set -b
@@ -55,7 +55,7 @@ while [ $# -gt 0 ]; do
 done
 
 echo "Loading database settings from $DBDIR/../$env_file"
-export $(cat "$DBDIR/../$env_file")
+export $(cat "$DBDIR/../$env_file" | xargs)
 
 mysql_command="$mysql_command_prefix mysql --user=$DB_USER --password=$DB_PASSWORD --host=$DB_HOST $DB_NAME"
 

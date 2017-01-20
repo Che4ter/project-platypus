@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 DBDIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 if [ "--test" = "$1" ]; then
-    export $(cat "$DBDIR/../.testenv")
+    export $(cat "$DBDIR/../.testenv" | xargs)
 else
-    export $(cat "$DBDIR/../.env")
+    export $(cat "$DBDIR/../.env" | xargs)
 fi
 
 cat <<-CREATESQL
