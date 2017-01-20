@@ -7,8 +7,12 @@ ppcurl() {
     curl "$@" | jq .
 }
 
+curlauth() {
+    curl -H "Authorization: Bearer $(cat "$TOKEN_FILE")" "$@"
+}
+
 ppcurlauth() {
-    curl -H "Authorization: Bearer $(cat "$TOKEN_FILE")" "$@" | jq .
+    curlauth "$@" | jq .
 }
 
 save_token() {
