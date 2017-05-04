@@ -9,3 +9,9 @@ namespace Platypus\Model;
 | created_at | datetime         | YES  |     | NULL    |                |
 | updated_at | datetime         | YES  |     | NULL    |                |
 +------------+------------------+------+-----+---------+----------------+
+E DATABASE TABLE*/
+
+class Mood extends \Illuminate\Database\Eloquent\Model
+{
+}
+
