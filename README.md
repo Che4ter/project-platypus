@@ -84,6 +84,17 @@ To initialise the test database used by the phpunit tests use the following comm
 
 ### Developer Info
 
+## How to setup your system
+
+1. create database: mysql -u root -p < ./db/db.sql
+2. add dummy data to your db: mysql -u platypus -p platypusDb < ./db/dummy_data_import.sql
+3. make sure you have to have JWT_SECRET AND JWT_TOKEN in your .env file
+4. run ./devScripts/registerUser.sh
+5. run ./devScripts/getToken.sh
+6. try to make a GET request on localhost:8080/api/v1/user with Header "Authorization" "Bearer %YourToken%" (you find your token under /tmp/project-platypus-token"
+
+### issues
+
 mysql -h hostname -u username -p password databasename
 
 If you have isues to connect via myslq, you may need to grant access. There is an example in ./db/db.sql
