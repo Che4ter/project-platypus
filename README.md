@@ -86,6 +86,6 @@ To initialise the test database used by the phpunit tests use the following comm
 
 mysql -h hostname -u username -p password databasename
 
-If you have isues to connect via myslq, you may need to grant access. There is an example in ./db/db-user.sql
+If you have isues to connect via myslq, you may need to grant access. There is an example in ./db/db.sql
 
-you may copy it via docker cp ./db/db-user.sql platypusDb:/tmp
+you may copy it via docker cp ./db/db.sql platypusDb:/tmp
