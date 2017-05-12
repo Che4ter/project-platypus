@@ -81,3 +81,11 @@ the testsin tests/Functional use a testing database which can be configured in `
 To initialise the test database used by the phpunit tests use the following command:
 
     devScripts/updateDb.sh --renew --seed --test
+
+### Developer Info
+
+mysql -h hostname -u username -p password databasename
+
+If you have isues to connect via myslq, you may need to grant access. There is an example in ./db/db-user.sql
+
+you may copy it via docker cp ./db/db-user.sql platypusDb:/tmp
