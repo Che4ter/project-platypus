@@ -1,8 +1,17 @@
+CREATE USER IF NOT EXISTS 'platypus'@'localhost' IDENTIFIED BY 'platypus';
+CREATE USER IF NOT EXISTS 'platypus'@'172.17.0.1' IDENTIFIED BY 'platypus';
+
+
+DROP DATABASE IF EXISTS platypus;
+CREATE DATABASE IF NOT EXISTS platypus;
+USE platypus;
+GRANT ALL ON platypus.* TO 'platypus'@'localhost';
+GRANT ALL ON platypus.* TO 'platypus'@'172.17.0.1';
 
 SET FOREIGN_KEY_CHECKS=0;
 
-DROP TABLE IF EXISTS roles;
-CREATE TABLE roles (
+
+CREATE TABLE roles(
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   	rolename VARCHAR(30) NOT NULL,
   	can_delete BINARY DEFAULT false,
@@ -17,7 +26,6 @@ CREATE TABLE roles (
 	PRIMARY KEY(id)
 );
 
-DROP TABLE IF EXISTS users;
 CREATE TABLE users (
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	mailaddress VARCHAR(150),
@@ -31,7 +39,6 @@ CREATE TABLE users (
   	FOREIGN KEY (role_id) REFERENCES roles(id)
 );
 
-DROP TABLE IF EXISTS hashtypes;
 CREATE TABLE hashtypes (
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	hashtype_description VARCHAR(50),
@@ -40,7 +47,6 @@ CREATE TABLE hashtypes (
 	PRIMARY KEY(id)
 );
 
-DROP TABLE IF EXISTS moods;
 CREATE TABLE moods (
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	moodname VARCHAR(50),
@@ -49,7 +55,6 @@ CREATE TABLE moods (
 	PRIMARY KEY(id)
 );
 
-DROP TABLE IF EXISTS hashtags;
 CREATE TABLE hashtags (
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	hashtext VARCHAR(50) NOT NULL,
@@ -61,7 +66,6 @@ CREATE TABLE hashtags (
 	FOREIGN KEY (hashtypes_id) REFERENCES hashtypes(id)
 );
 
-DROP TABLE IF EXISTS feedback;
 CREATE TABLE feedback (
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	feedback_text VARCHAR(500) NOT NULL,
@@ -78,7 +82,6 @@ CREATE TABLE feedback (
   	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-DROP TABLE IF EXISTS feedback_hashtag;
 CREATE TABLE feedback_hashtag (
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	hashtag_id INTEGER UNSIGNED NOT NULL,
@@ -90,7 +93,6 @@ CREATE TABLE feedback_hashtag (
   	FOREIGN KEY (feedback_id) REFERENCES feedback(id)
 );
 
-DROP TABLE IF EXISTS votes;
 CREATE TABLE votes (
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	feedback_id INTEGER UNSIGNED NOT NULL,
@@ -103,7 +105,6 @@ CREATE TABLE votes (
   	FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
-DROP TABLE IF EXISTS reports;
 CREATE TABLE reports (
 	id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
 	feedback_id INTEGER UNSIGNED NOT NULL,

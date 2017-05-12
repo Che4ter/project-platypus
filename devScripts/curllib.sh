@@ -4,7 +4,7 @@ TOKEN_FILE=/tmp/project-platypus-token
 
 # pretty print the output of the curl command using jq
 ppcurl() {
-    curl "$@" | jq .
+    curl -vvv "$@" | jq .
 }
 
 curlauth() {
