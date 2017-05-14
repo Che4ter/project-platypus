@@ -51,7 +51,7 @@ class FeedbackController
     {
         return ['id' => $feedback->id, 'feedback_text' => $feedback->feedback_text, 'parent_id' => $feedback->parent_id, 'hashtags' => $feedback->hashtags->map(function ($hashtag) {
             return $this->covertToCleanHashtag($hashtag);
-        }),'last_modified' => $feedback->updated_at,'votes_count' => ($feedback->votes->where('direction',1)->count() - $feedback->votes->where('direction',0)->count())
+        }),'last_modified' => $feedback->updated_at->format("Y-m-d H:i:s"),'votes_count' => ($feedback->votes->where('direction',1)->count() - $feedback->votes->where('direction',0)->count())
 
         ];
 
@@ -59,7 +59,7 @@ class FeedbackController
 
     private function covertToCleanHashtag($hashtag)
     {
-        return ['id' => $hashtag->id, 'hashtext' => $hashtag->hashtext,'hash_types_id' => $hashtag->hashtypes_id,'last_modified' => $hashtag->updated_at
+        return ['id' => $hashtag->id, 'hashtext' => $hashtag->hashtext,'hash_types_id' => $hashtag->hashtypes_id,'last_modified' => $hashtag->updated_at->format("Y-m-d H:i:s")
 
         ];
     }
