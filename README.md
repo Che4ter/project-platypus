@@ -1,3 +1,7 @@
+# Project-Platypus
+
+Back-End REST-API written in PHP using the Slim-Framework.
+
 # API Documentation
 
 ***(work in progress)***
@@ -40,19 +44,41 @@ General API URL: `platypus.stair.ch/api/`
 
 - all hashtag: `/hashtag`
 
-### Development
+# Development
 
-## How to install php / run the php server
-install php-cli (php5-cli)
-move composer.phar to project root
-run "php composer.phar install" to copy all dependencies into ./vendor/
+## PHP Development Web-Server
 
-run "php composer.phar run start" to start the server
-use localhost:8080 to access the website (/api/v1/user for a first example)
+### Dependencies
 
-run "php composer.phar run test" to run all tests
+#### php-cli
+You need to install the package to run php as a command line tool. In most distros this package is called `php-cli`. 
+#### composer
 
-### Database
+Visit [getcomposer.org](https://getcomposer.org/) and install composer. There may also be a package available for your distribution.
+
+You can also just download the `composer.phar` file and run `php composer.phar` instead of `composer`. This way you don't need to install anything.
+
+If you've installed composer run one of the following commands (depending on how you've installed composer):
+
+```
+composer install
+php composer.phar install
+```
+
+This will download an install the projects PHP dependencies into the `./vendor/` directory.
+
+### Running the Development Web Server
+
+You can either run the Development Web-Server through composer or by using the `./serve.sh` script.
+
+```
+./serve.sh
+composer run start
+```
+
+In the past the version with the script was more reliable because composer has an internal timeout and the server may get killed after 3 minutes.
+
+## Database
 
 Move the `.env.example` to `.env` and set up your database correctly.
 Only MySQL is supported as of now (because of the SQL script to import the database, eloquent would support other databases as well).
@@ -69,12 +95,13 @@ Run it without the renew if you want to set the permissions and create the datab
 
 Use the `--docker` option to use the mysqlclient inside a docker container.
 
-### Tests
+## Unit-Tests
 
 PHPUnit is used as the testing framework. Use either of the following commands to run the tests:
 
     phpunit # uses phpunit provided by the system
     vendor/bin/phpunit # used phpunit provided by composer
+    composer run test # call phpunit through composer
 
 the testsin tests/Functional use a testing database which can be configured in `.testenv`.
 
