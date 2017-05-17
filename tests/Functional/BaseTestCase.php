@@ -151,7 +151,7 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
             'password' => $password
         ]);
 
-        $this->assertEquals(201, $response->getStatusCode(), "Counldn't aquire auth token for test user");
+        $this->assertEquals(201, $response->getStatusCode(), "Couldn't aquire auth token for test user");
         $json_body = json_decode($response->getBody());
         $this->assertTrue(is_object($json_body), "Invalid JSON returned for authentication of a test user");
         return $json_body->token;
