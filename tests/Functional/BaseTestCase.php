@@ -8,7 +8,7 @@ use Slim\Http\Response;
 use Slim\Http\Environment;
 use Platypus\Model\User;
 
-define('DEFAULT_TESTUSER_EMAIL', 'test@mail.com');
+define('DEFAULT_TESTUSER_EMAIL', 'test@stud.hslu.ch');
 define('DEFAULT_TESTUSER_PASSWORD', '12345678');
 
 /**

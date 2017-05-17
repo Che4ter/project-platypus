@@ -9,7 +9,7 @@ class FeedbackControllerTest extends BaseTestCase
     public function setUp() {
         $this->createApp();
         $this->beginTransaction();
-        $this->user = $this->createAuthenticatedTestUser('feedbackTester@mail.com', 'feedback');
+        $this->user = $this->createAuthenticatedTestUser('feedbackTester@stud.hslu.ch', 'feedback');
     }
 
     public function tearDown() {

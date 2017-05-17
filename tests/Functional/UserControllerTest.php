@@ -17,7 +17,7 @@ class UserControllerTest extends BaseTestCase
     }
 
     public function test_UserRequest_returnsAllUsers_forAdmin() {
-        $adminUser = $this->createAuthenticatedTestUser('admin@yolo.com', '12345678', Role::ID_ADMIN);
+        $adminUser = $this->createAuthenticatedTestUser('admin@stud.hslu.ch', '12345678', Role::ID_ADMIN);
         $response = $this->runAppAs($adminUser, 'GET', '/api/v1/user');
         $this->assertEquals(200, $response->getStatusCode());
         $users = json_decode($response->getBody());
@@ -25,14 +25,14 @@ class UserControllerTest extends BaseTestCase
     }
 
     public function test_UserRequest_doesntReturnAllUsers_forRegularUser() {
-        $user = $this->createAuthenticatedTestUser('user@yolo.com', '12345678', Role::ID_USER);
+        $user = $this->createAuthenticatedTestUser('user@stud.hslu.ch', '12345678', Role::ID_USER);
         $response = $this->runAppAs($user, 'GET', '/api/v1/user');
         $this->assertEquals(401, $response->getStatusCode());
     }
 
     public function test_UserRequest_createUser() {
         $this->createTestUser();
-        $this->assertTrue(User::where('mailaddress', 'test@mail.com')->first() != null);
+        $this->assertTrue(User::where('mailaddress', 'test@stud.hslu.ch')->first() != null);
     }
 
     public function test_UserRequest_createUser_alreadyExists() {
@@ -48,20 +48,27 @@ class UserControllerTest extends BaseTestCase
         $this->assertEquals(422, $responseFail->getStatusCode());
     }
 
+
+    public function test_UserRequest_createUser_nostudMail() {
+        $responseFail = $this->makeCreateTestUserRequest("mail@lol.ch");
+
+        $this->assertEquals(403, $responseFail->getStatusCode());
+    }
+
     public function test_UserRequest_createUser_shortPw() {
-        $responseFail = $this->makeCreateTestUserRequest("valid@mail.com", "shortpw");
+        $responseFail = $this->makeCreateTestUserRequest("valid@stud.hslu.ch", "shortpw");
 
         $this->assertEquals(422, $responseFail->getStatusCode());
     }
 
 
     public function test_UserRequest_getUser() {
-        $user = $this->createAuthenticatedTestUser('testuser15@mail.com', '12345678');
+        $user = $this->createAuthenticatedTestUser('testuser15@stud.hslu.ch', '12345678');
         $response = $this->runAppAs($user, 'GET', '/api/v1/user/' . $user->id);
         $this->assertEquals(200, $response->getStatusCode());
 
         $body = json_decode($response->getBody());
-        $this->assertEquals('testuser15@mail.com', $body->mailaddress);
+        $this->assertEquals('testuser15@stud.hslu.ch', $body->mailaddress);
         // make sure password is not readable
         $this->assertTrue(!isset($body->password));
     }

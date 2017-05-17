@@ -14,7 +14,7 @@ class SessionControllerTest extends BaseTestCase
     public function setUp() {
         $this->createApp();
         $this->beginTransaction();
-        $this->user = $this->createTestUser('test@mail.com', '12345678');
+        $this->user = $this->createTestUser('test@stud.hslu.ch', '12345678');
         $this->originalJwtSecret = env('JWT_SECRET', '');
         $this->originalJwtTokenTimeout = env('JWT_TOKEN_TIMEOUT', '');
     }
