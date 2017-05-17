@@ -24,7 +24,7 @@ $app = new \Slim\App($settings);
 
 // JWT Middleware
 $app->add(new \Slim\Middleware\JwtAuthentication([
-    "secret" => "supersecretkeyyoushouldnotcommittogithub",
+    "secret" => env("JWT_SECRET", "supersecretkeyyoushouldnotcommittogithub"),
     "path" => ["/protected", "/admin"]]));
 
 // Set up dependencies

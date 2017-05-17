@@ -30,6 +30,6 @@ let
 in rec {
     phpXdebug = stdenv.mkDerivation rec {
         name = "phpxdebug-env";
-        buildInputs = [phpOverride pkgs.php70Packages.composer pkgs.curl pkgs.jq];
+        buildInputs = [phpOverride pkgs.php70Packages.composer pkgs.curl pkgs.jq pkgs.bash pkgs.mariadb];
     };
 }
