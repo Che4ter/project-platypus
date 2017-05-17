@@ -15,9 +15,12 @@ class FeedbackService
 
     public function getFeedbacks($lastsync)
     {
+        $date = new \DateTime();
+        $date->setTimestamp($lastsync);
+
         return Feedback::with(array('votes'=>function($query){
             $query->select('id','feedback_id','user_id','direction');
-        },'hashtags'))->get()->where('updated_at','>',new \DateTime($lastsync));
+        },'hashtags'))->where('updated_at','>',$date)->get();
     }
 
 
