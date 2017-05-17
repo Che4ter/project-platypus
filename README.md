@@ -31,6 +31,7 @@ General API URL: `platypus.stair.ch/api/`
 
 - all feedback: `/feedback`
 - all feedback with updated date > lastsync: `/feedback?lastsync=val`
+  lastsync must be a unixtimestamp
 - feedback by ID: `/feedback/<id>`
 
 not yet implemented
