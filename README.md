@@ -23,7 +23,8 @@ General API URL: `platypus.stair.ch/api/`
 
 ### POST
 
-- new user: `/user
+- new user: `/user`
+ -> only user with @stud.hslu.ch email are allowed to register
 
 ## Feedback
 

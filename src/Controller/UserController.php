@@ -36,6 +36,10 @@ class UserController
             return $response->withJson(["errors" => ["User already exists."]], 409);
         }
 
+        if(!$this->endsWith($request_params["mailaddress"],"@stud.hslu.ch")) {
+            return $response->withJson(["errors" => ["Only HSLU Students allowed to register"]], 403);
+        }
+        
         $createdUser = $this->userService->createUser($request_params);
 
         if($createdUser === null) {
@@ -43,6 +47,13 @@ class UserController
         }
 
         return $response->withJson(["success" => 1, "new_user" => $createdUser]);
+    }
+
+
+    private function endsWith($haystack, $needle)
+    {
+        $length = strlen($needle);
+        return (substr($haystack, -$length) === $needle);
     }
 
 }
