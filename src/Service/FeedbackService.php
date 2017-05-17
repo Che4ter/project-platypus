@@ -13,14 +13,14 @@ class FeedbackService
         $this->ci = $ci;
     }
 
-    public function getFeedbacks()
+    public function getFeedbacks($lastsync)
     {
+        $date = new \DateTime();
+        $date->setTimestamp($lastsync);
 
         return Feedback::with(array('votes'=>function($query){
             $query->select('id','feedback_id','user_id','direction');
-        },'hashtags','moods'=>function($query){
-            $query->select('id','moodname');
-        }))->get();
+        },'hashtags'))->where('updated_at','>',$date)->get();
     }
 
 

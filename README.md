@@ -30,7 +30,10 @@ General API URL: `platypus.stair.ch/api/`
 ### GET
 
 - all feedback: `/feedback`
+- all feedback with updated date > lastsync: `/feedback?lastsync=val`
 - feedback by ID: `/feedback/<id>`
+
+not yet implemented
 - feedback by user ID: `/feedback/?user_id=<id>`
 - feedback by hashtag: `/feedback/?hashtag[]=<hashtag1>&hashtag[]=<hashtag2>`
 

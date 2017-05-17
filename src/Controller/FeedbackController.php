@@ -8,7 +8,6 @@ use Platypus\Model\User;
 class FeedbackController
 {
     private $feedbackService;
-
     public function __construct(ContainerInterface $ci)
     {
         $this->feedbackService = $ci->get('FeedbackService');
@@ -16,7 +15,15 @@ class FeedbackController
 
     public function getFeedbacks($request, $response, $args)
     {
-        $data = $this->feedbackService->getFeedbacks();
+        $allGetVars = $request->getQueryParams();
+        $lastsync = "0";
+
+        if(array_key_exists('lastsync', $allGetVars))
+        {
+            $lastsync = $allGetVars['lastsync'];
+        }
+
+        $data = $this->feedbackService->getFeedbacks($lastsync);
 
         //Code to define what to return
         $result = $data->map(function ($feedback){
