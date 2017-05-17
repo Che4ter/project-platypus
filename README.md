@@ -46,7 +46,13 @@ General API URL: `platypus.stair.ch/api/`
 
 # Development
 
+If you've used nix before you might find it usable to get all required dependencies automatically. See here [nix.md](https://github.com/Che4ter/project-platypus/blob/master/nix.md).
+
+Or just install the dependencies yourself:
+
 ## PHP Development Web-Server
+
+PHPs internal web server is used for development. That means the public/.htaccess file has no affect. Make sure to configure it properly when running this project on Apache or Nginx.
 
 ### Dependencies
 
