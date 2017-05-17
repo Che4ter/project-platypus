@@ -6,3 +6,4 @@
 .testenv
 *.sw*
 *~
+/*.html
