@@ -3,6 +3,7 @@
 namespace Platypus\Service;
 use Interop\Container\ContainerInterface;
 use Platypus\Model\Feedback;
+use Platypus\Model\Vote;
 
 class FeedbackService
 {
@@ -26,6 +27,26 @@ class FeedbackService
 
     public function getFeedback($id) {
         return Feedback::find($id);
+    }
+
+    public function voteFeedback($request_params,$feedbackId)
+    {
+        $userid = $this->ci->get('jwt')->sub;
+
+        if(!Vote::where('user_id',$userid)
+            ->where('feedback_id',$feedbackId)
+            ->exists()){
+            $new_vote = new Vote();
+            $new_vote->direction = $request_params["direction"];
+            $new_vote->user_id = $userid;
+            $new_vote->feedback_id = $feedbackId;
+            $new_vote->save();
+            return $new_vote;
+        }
+        else
+        {
+            return null;
+        }
     }
 
     public function createFeedback($request_params)

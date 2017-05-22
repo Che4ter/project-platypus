@@ -31,6 +31,22 @@ class FeedbackControllerTest extends BaseTestCase
         $this->assertTrue(is_array($feedbacks));
     }
 
+    public function test_FeedbackRequest_returnsAllFeedbacksWithDetails() {
+        $response = $this->runAppAs($this->user,'GET', '/api/v1/auth/feedback');
+        $this->assertEquals(200, $response->getStatusCode());
+        $feedbacks = json_decode($response->getBody());
+        $this->assertTrue(is_array($feedbacks));
+    }
+
+    public function test_FeedbackRequest_voteOnFeedback() {
+        $response = $this->runAppAs($this->user, 'POST', 'localhost:8080/api/v1/auth/feedback/vote/1', [
+            'direction' => 1
+        ]);
+        $this->assertEquals(200, $response->getStatusCode());
+        $feedbacks = json_decode($response->getBody());
+        $this->assertTrue(is_array($feedbacks));
+    }
+
     public function test_FeedbackRequest_createFeedback() {
         #$this->markTestIncomplete(
             #'Ignored because it fails currently. Please fix @mogria'

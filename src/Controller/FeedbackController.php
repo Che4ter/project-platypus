@@ -7,14 +7,37 @@ use Platypus\Model\User;
 
 class FeedbackController
 {
+    private  $ci;
     private $feedbackService;
+
     public function __construct(ContainerInterface $ci)
     {
         $this->feedbackService = $ci->get('FeedbackService');
+        $this->ci = $ci;
     }
 
     public function getFeedbacks($request, $response, $args)
     {
+        $allGetVars = $request->getQueryParams();
+        $lastsync = "0";
+
+        if(array_key_exists('lastsync', $allGetVars))
+        {
+            $lastsync = $allGetVars['lastsync'];
+        }
+
+        $data = $this->feedbackService->getFeedbacks($lastsync);
+
+        //Code to define what to return
+        $result = $data->map(function ($feedback){
+            return $this->convertToCleanFeedback($feedback);
+        });
+        return $response->withJson($result, 200);
+    }
+
+    public function getFeedbacksWithUserDetails($request, $response, $args)
+    {
+        $userid = $this->ci->get('jwt')->sub;
         $allGetVars = $request->getQueryParams();
         $lastsync = "0";
 
@@ -52,6 +75,22 @@ class FeedbackController
         }
 
         return $response->withJson(["success" => 1, "new_feedback" => $createdFeedback]);
+    }
+
+    public function voteOnFeedback($request, $response, $args)
+    {
+        //FIXME: make sure to use the user_id provided by the JWT token and not the one provided by the user
+        //       a user shoulnd't be able to post on behalf of an other user
+        //       Fix test case as well because user_id is passed at the moment
+        $request_params = $request->getParsedBody();
+
+        $createdVote = $this->feedbackService->voteFeedback($request_params,$args['id']);
+
+        if($createdVote === null) {
+            return $response->withJson(["error" => "Failed to vote on feedback."], 422);
+        }
+
+        return $response->withJson(["success" => 1, "new_vote" => $createdVote]);
     }
 
     private function convertToCleanFeedback($feedback)

@@ -42,6 +42,7 @@ $app->group('/api/v1', function() use ($app) {
 
     //FEEDBACK
     $app->get('/feedback', '\Platypus\Controller\FeedbackController:getFeedbacks');
+
     $app->get('/feedback/{id}', '\Platypus\Controller\FeedbackController:getFeedback');
 });
 
@@ -52,6 +53,13 @@ $app->group('/api/v1', function() use ($app) {
         ->add(new AuthorizeRequest(Role::ID_ADMIN));
 
     $app->get('/user/{id}', '\Platypus\Controller\UserController:getUser');
+
+    //FEEDBACK
+    $app->get('/auth/feedback', '\Platypus\Controller\FeedbackController:getFeedbacksWithUserDetails')
+        ->add(new AuthorizeRequest(Role::ID_USER));
+
+    $app->post('/auth/feedback/vote/{id}', '\Platypus\Controller\FeedbackController:voteOnFeedback')
+    ->add(new AuthorizeRequest(Role::ID_USER));
 
     $app->post('/feedback', '\Platypus\Controller\FeedbackController:createFeedback');
 
