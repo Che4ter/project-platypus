@@ -17,11 +17,22 @@ class FeedbackService
     public function getFeedbacks($lastsync)
     {
         $date = new \DateTime();
-        $date->setTimestamp($lastsync);
+        $date->setTimestamp($lastsync);/*
+        $result = Feedback::with(array('votes'=>function($query) use($date){
+           $query->select('id','feedback_id','user_id','direction','updated_at')
+           ->where('updated_at','>',$date);
+          },'hashtags'))
+        ->get();
+        return $result;*/
 
-        return Feedback::with(array('votes'=>function($query){
-            $query->select('id','feedback_id','user_id','direction');
-        },'hashtags'))->where('updated_at','>',$date)->get();
+        $date = new \DateTime();
+        $date->setTimestamp($lastsync);
+        $result = Feedback::with(array('votes'=>function($query){
+            $query->select('id','feedback_id','user_id','direction','updated_at');
+        },'hashtags'))
+            ->where("updated_at", '>', $date)
+            ->get();
+        return $result;
     }
 
 
@@ -41,6 +52,8 @@ class FeedbackService
             $new_vote->user_id = $userid;
             $new_vote->feedback_id = $feedbackId;
             $new_vote->save();
+
+            Feedback::where('id', $feedbackId)->first()->touch();
             return $new_vote;
         }
         else
