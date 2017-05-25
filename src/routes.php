@@ -67,6 +67,7 @@ $app->group('/api/v1', function() use ($app) {
     ->add(new AddJwtToRequest($app->getContainer()))
     ->add(new \Slim\Middleware\JwtAuthentication([
         "secret" => env("JWT_SECRET"),
+        "secure" => false,
         "callback" => function($request, $response, $arguments) use ($app) {
             // store decoded jwt token in container
             $container = $app->getContainer();
