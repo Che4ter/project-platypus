@@ -64,10 +64,12 @@ class FeedbackService
 
     public function createFeedback($request_params)
     {
+        $userid = $this->ci->get('jwt')->sub;
+
         $new_feedback = new Feedback();
         $new_feedback->feedback_text = $request_params["feedback_text"];
-        $new_feedback->moods_id = $request_params["moods_id"];
-        $new_feedback->user_id = $request_params["user_id"];
+        $new_feedback->user_id = $userid;
+        $new_feedback->moods_id = 1;
         // $new_feedback->hashtags = $request_params["hashtags"];
         $new_feedback->save();
         return $new_feedback;
